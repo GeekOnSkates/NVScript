@@ -46,23 +46,27 @@ class Parser
         ; Trim unnecessary whitespace
         data := RegExReplace(data, " {1,}|\t{1,}", " ")
 
-        ; Replace the string placeholders with the strings
-        Loop % strings.MaxIndex()
-            data := StrReplace(data, "{str" . A_Index . "}", strings[A_Index], 0, 1)
-        MsgBox %data%
-
         ; Separate each line into its own string
         data := StrSplit(data, ";")
 
-        ; Now we have just the code to work with, so we can check for syntax errors
-        ; First, handle Script and EndScript
-        this._scripts := this.GetScripts(data)
-
-        ; NEXT: The GetScripts function should return the list of lines between Script and EndScript.
-        ; Once that's done, the next thing will be to actually executing what's in the script;
-        ; From there, I think the next logical step will be to do the same with functions.
-        ; And beyond that it's all about the API, so I'll cross that bridge when I get there. :)
-        MsgBox Left off here
+        ; Replace the string placeholders with the strings
+        Loop % data.MaxIndex()
+        {
+            line := data[A_Index]
+            replace := ""
+            Loop % strings.MaxIndex()
+            {
+                if (InStr(line, "{str" . A_Index . "}"))
+                {
+                    replace := StrReplace(line, "{str" . A_Index . "}", strings[A_Index])
+                }
+            }
+            if (replace != "")
+                data[A_Index] := replace
+        }
+        
+        ; Now we have just the code to work with, so we can check for syntax errors etc.
+        this.GetScripts(data)
     }
 
     /**
@@ -73,36 +77,43 @@ class Parser
      */
     GetScripts(data)
     {
-        ; Declare variables
-        scripts := array()          ; This gets returned in the end
-        length := StrLen(data)      ; The length of the string  to be parsed
-        script_open := false        ; Used to check for syntax errors
-
+        current_script := array()
+        in_script := false
         Loop % data.MaxIndex()
         {
-            ; Check for nested Script / Script inside Script
-            if (StringStartsWith(Trim(data[A_Index], " `t`r`n"), "Script"))
-            {
-                if (script_open)
-                    MsgBox Error in line %A_Index%: A script can't contain another script
-                else
-                    script_open := true
-            }
+            ; Skip empty lines
+            line := Trim(data[A_Index], " `t`r`n")
 
-            ; Check for EndScript withou Script
-            if (StringStartsWith(Trim(data[A_Index], " `t`r`n"), "EndScript"))
+            ; Handle the "Script" (script start) keyword
+            if (StringStartsWith(line, "Script "))
             {
-                if (!script_open)
-                    MsgBox Error in line %A_Index%: EndScript without Script
-                else
-                    script_open := false
+                ; Check to make sure the script follows the pattern:
+                ; Script MyScriptName(optional hotkey, I'll get to that later)
+                if (!this.isFunction(SubStr(line, 8)))
+                {
+                    MsgBox Error on line %A_Index%: Invalid Script start
+                    return
+                }
             }
-
-            ; Check for Script without EndScript
-            if (A_Index == data.MaxIndex() - 1 && script_open)
-                MsgBox Error in line %A_Index%: Script without EndScript
+            else if (StringStartsWith(line, "Script"))
+            {
+                ; Do all the same stuff for "Script" without the space
+                if (!this.isFunction(SubStr(line, 7)))
+                {
+                    MsgBox Error on line %A_Index%: Invalid Script start
+                    return
+                }
+            }
         }
-        
-        return scripts
+    }
+
+    /**
+     * Checks if a string follows the standard pattern expected for a function
+     * @pram {string} str The string to evaluate
+     * @return {bool} True if it matches, false if it doesn't
+     */
+    isFunction(str)
+    {
+        return RegExMatch(str, "^[a-zA-Z_][0-9a-zA-Z_]{0,}\(.{0,}\)$|^[a-zA-Z_][0-9a-zA-Z_]{0,} \(.{0,}\)$")
     }
 }

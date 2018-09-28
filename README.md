@@ -34,8 +34,16 @@ means you need a bunch of EXEs running if you have more than one script; one int
 
 ## Roadmap
 
-1. First, I want to build a working proof-of-concept. I want it to be able to do everything the DLL can.
+1. First, I want to build a working proof-of-concept. I want it to be able to do everything the DLL can, and have some of the basic features of a scripting language: variables, loops, arrays, and functions.  That's about al JAWS scripting has (no classes, interfaces, generics, lambdas, etc.).  I'd lke its syntax to work similar to JAWS scripting, because of goal #1 above, but it doesn't necessarily have to be identical.  One important difference I'm planning on is how shortcuts work.  In JAWS scripting, shortcuts can only be set from the IDE; I do plan to have a nice IDE someday, but I really think that info should be in the code somewhere (at this point I'm thinking as a parameter in script declarations).
 2. From there, I want to add some of the same functions that are in the JAWS scripting API.  It's been years since I wrote a JAWS
-script, so I forget what those are, but I have some ideas.  This will be an ongoing process, as JAWS scripting is always changing.
-3. But NVDA can do some things JAWS can't and vice versa, so the next part would be to add some features not available in JAWS.
-4. And of course, I'll want to give it a nice user-friendly UI for folks who need/want that.
+script, so I forget what those are, but I have access to JAWS at work and can look them up.  This will be an ongoing process, as JAWS scripting is always changing.  For example, I looked up an example recently and found its variable are strongly typed - I totally don't remember that! :)
+3. But NVDA and AHK can do some things JAWS can't, so the next part would be to add some features not available in JAWS scripting.
+4. And of course, I'll want to give it a nice user-friendly IDE for folks who need/want that.  At this point that's just a crazy dream, but I'm sure I'll get there eventually (especially if it's not just me working on it).
+
+## Contributing
+
+I know AutoHotKey is not a very well-known language (yet), but if you know it you're more than welcome to do that!  As Hellen Keller said, "Alone we can do so little; together we can do so much"!  The more the merrier - that's what's gonna make NVScript a thing.  Just fork it, code away, and submit a pull request.  
+
+## License
+
+Both NVDA and AutoHotKey use "GNU General Public License, version 2".  I'm not much of a legal beagle, more of a code monkey, so I'm not sure what that means in English other than "it's open source".  But since both use the same license, I think it's safe to assume that NVScript has the same license.

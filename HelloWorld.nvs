@@ -3,3 +3,9 @@ Script HelloWorld ()
     SayString ("Hello World!")  ; Speaks Hello World when Control-1 is pressed 
     SayString ("Semicolon; in a string")
 EndScript
+
+; The interpreter caught these:
+; Script abc123
+; Script ()
+; Script()
+; Script 3whatever()
