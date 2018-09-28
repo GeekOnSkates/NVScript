@@ -21,6 +21,21 @@ class Parser
         FileRead, data, %file%
         data .= "`r`n"
 
+        ; Replace the strings with a placeholder
+        found := 1
+        
+        ; Collect all the strings and replace them with placeholders
+        strings := array()
+        Loop
+        {
+            found := RegExMatch(data, """.{0,}""", s, found)
+            if (found == 0)
+                break
+            data := StrReplace(data, s, "{str" . A_Index . "}", 0, 1)
+            strings.push(s)
+            found += 1
+        }
+
         ; Remove comments
         data := RegExReplace(data, ";.{0,}\r\n", "`r`n")
 
@@ -30,6 +45,11 @@ class Parser
 
         ; Trim unnecessary whitespace
         data := RegExReplace(data, " {1,}|\t{1,}", " ")
+
+        ; Replace the string placeholders with the strings
+        Loop % strings.MaxIndex()
+            data := StrReplace(data, "{str" . A_Index . "}", strings[A_Index], 0, 1)
+        MsgBox %data%
 
         ; Separate each line into its own string
         data := StrSplit(data, ";")

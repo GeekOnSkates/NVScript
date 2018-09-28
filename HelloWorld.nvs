@@ -1,4 +1,5 @@
 ; Makes NVDA speak "Hello World!"
 Script HelloWorld ()
     SayString ("Hello World!")  ; Speaks Hello World when Control-1 is pressed 
+    SayString ("Semicolon; in a string")
 EndScript
