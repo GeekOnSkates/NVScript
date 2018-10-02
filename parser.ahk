@@ -121,8 +121,20 @@ class Parser
             if (in_script)
             {
                 if (line == "EndScript")
+                {
                     in_script := false
+                    this._scripts.push(new Script(current_script))
+                    current_script := array()
+                }
                 else current_script.push(line)
+            }
+            else
+            {
+                if (line == "EndScript")
+                {
+                    MsgBox Error on line %A_Index%: EndScript without Script
+                    return
+                }
             }
 
             ; Check for Script without EndScript
@@ -132,7 +144,9 @@ class Parser
                     return
             }
         }
-        MsgBOx So far, so good!
+
+        ; Now outside the loop, let me know how many scripts it found (for now)
+        ; MsgBox % this._scripts.MaxIndex()
     }
 
     /**
@@ -143,5 +157,23 @@ class Parser
     isFunction(str)
     {
         return RegExMatch(str, "^[a-zA-Z_][0-9a-zA-Z_]{0,}\(.{0,}\)$|^[a-zA-Z_][0-9a-zA-Z_]{0,} \(.{0,}\)$")
+    }
+
+    /**
+     * Calls a functions (either one of the pre-built ones, or down the road, a user-defined function)
+     * @param {string} line A line of code containing the function
+     */
+    CallFunction(line)
+    {
+        left := InStr(line, "(") - 1
+        right := InStr(line, ")") - 1
+        funcName := Trim(SubStr(line, 1, left), " `t")
+        if (funcName != "SayString")    ; Expand this list
+        {
+            MsgBox Error: Invalid function %funcName%
+            return
+        }
+        params := SubStr(line, left + 2, right - left - 1)
+        MsgBox %params%
     }
 }

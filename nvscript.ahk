@@ -1,4 +1,6 @@
 #include %A_ScriptDir%\parser.ahk
+#include %A_ScriptDir%\Script.ahk
+#include %A_ScriptDir%\api.ahk
 
 file := A_ScriptDir . "\HelloWorld.nvs"
 p := new Parser()
