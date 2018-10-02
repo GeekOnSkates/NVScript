@@ -37,6 +37,7 @@ class Parser
         }
 
         ; Remove comments
+        ; TO-DO: Get it to remove multi-line comments as well
         data := RegExReplace(data, ";.{0,}\r\n", "`r`n")
 
         ; Replace line breaks with semicolons
@@ -165,6 +166,7 @@ class Parser
      */
     CallFunction(line)
     {
+        ; Split the string into  function name and parameters
         left := InStr(line, "(") - 1
         right := InStr(line, ")") - 1
         funcName := Trim(SubStr(line, 1, left), " `t")
@@ -174,6 +176,38 @@ class Parser
             return
         }
         params := SubStr(line, left + 2, right - left - 1)
-        MsgBox %params%
+        
+        ; Collect all the strings and replace them with placeholders
+        in_string := false
+        str := ""
+        args := array()
+        Loop % StrLen(params)
+        {
+            char := SubStr(params, A_Index, 1)
+            if (char == """")
+            {
+                if (!in_string)
+                    in_string := true
+                else
+                    in_string := false
+            }
+            else
+            {
+                if (char == ",")
+                    if (in_string)
+                        str .= char
+                    else
+                    {
+                        args.push(str)
+                        str := ""
+                    }
+                else 
+                    str .= char
+            }
+        }
+        args.push(str)
+
+        ; And run the function
+        %funcName%(args)
     }
 }
