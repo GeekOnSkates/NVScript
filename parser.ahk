@@ -94,6 +94,12 @@ class Parser
                     MsgBox Error on line %A_Index%: Invalid Script start
                     return
                 }
+                else if (in_script)
+                {
+                    MsgBox Error on line %A_Index%: Script inside Script
+                    return
+                }
+                else in_script := true
             }
             else if (StringStartsWith(line, "Script"))
             {
@@ -103,8 +109,30 @@ class Parser
                     MsgBox Error on line %A_Index%: Invalid Script start
                     return
                 }
+                else if (in_script)
+                {
+                    MsgBox Error on line %A_Index%: Script inside Script
+                    return
+                }
+                else in_script := true
+            }
+
+            ; Add the code to the line
+            if (in_script)
+            {
+                if (line == "EndScript")
+                    in_script := false
+                else current_script.push(line)
+            }
+
+            ; Check for Script without EndScript
+            if (A_Index == data.MaxIndex() - 1 && in_script)
+            {
+                MsgBox Error on line %A_Index%: Script missing EndScript
+                    return
             }
         }
+        MsgBOx So far, so good!
     }
 
     /**

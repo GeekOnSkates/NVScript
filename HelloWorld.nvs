@@ -2,10 +2,15 @@
 Script HelloWorld ()
     SayString ("Hello World!")  ; Speaks Hello World when Control-1 is pressed 
     SayString ("Semicolon; in a string")
-EndScript
+EndScript       ; If I comment out this line, the interpreter catches that error
 
 ; The interpreter caught these:
 ; Script abc123
 ; Script ()
 ; Script()
 ; Script 3whatever()
+; Script test()
+;    Script test()
+;        ; comment
+;    EndScript
+; EndScript
