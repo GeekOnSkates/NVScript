@@ -1,8 +1,12 @@
-; Makes NVDA speak "Hello World!"
-Script HelloWorld ()        ; If I comment this out, the interpreter catches it
-    SayString ("Hello, World!")  ; Speaks Hello World when Control-1 is pressed 
+/* Makes NVDA speak "Hello World!" */
+Script HelloWorld ()
+    SayString ("Hello, World!")
     SayString ("Semicolon; in a string", true)
-EndScript       ; If I comment out this line, the interpreter catches that error
+EndScript
+
+/* Multi-
+line
+comment */
 
 ; The interpreter caught these:
 ; Script abc123

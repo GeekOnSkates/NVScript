@@ -37,8 +37,8 @@ class Parser
         }
 
         ; Remove comments
-        ; TO-DO: Get it to remove multi-line comments as well
         data := RegExReplace(data, ";.{0,}\r\n", "`r`n")
+        data := RegExReplace(data, "s)/\*(?:(?!\*/).)*\*/", "")
 
         ; Replace line breaks with semicolons
         data := StrReplace(data, "`r", "")
