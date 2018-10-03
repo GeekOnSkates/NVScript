@@ -85,6 +85,10 @@ class Parser
             ; Skip empty lines
             line := Trim(data[A_Index], " `t`r`n")
 
+            ; Skip empty strings
+            if (line == "")
+                continue
+
             ; Handle the "Script" (script start) keyword
             if (StringStartsWith(line, "Script "))
             {
@@ -170,7 +174,7 @@ class Parser
         left := InStr(line, "(") - 1
         right := InStr(line, ")") - 1
         funcName := Trim(SubStr(line, 1, left), " `t")
-        if (funcName != "SayString")    ; Expand this list
+        if (!Parser.IsBuiltInFunction(funcName))
         {
             MsgBox Error: Invalid function %funcName%
             return
@@ -209,5 +213,21 @@ class Parser
 
         ; And run the function
         %funcName%(args)
+    }
+
+    /**
+     * Checks if a function name is one of the built-in functions of NVScript
+     * @param {string} name The function name
+     * @return {bool} True if it is, false if it isn't
+     */
+    IsBuiltInFunction(name)
+    {
+        names := ["SayString", "ClickAtPoint"]
+        Loop % names.MaxIndex()
+        {
+            if (names[A_Index] == name)
+                return true
+        }
+        return false
     }
 }

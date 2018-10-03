@@ -1,20 +1,10 @@
 /* Makes NVDA speak "Hello World!" */
 Script HelloWorld ()
-    SayString ("Hello, World!")
+    ; It caught these errors:
+    ; ClickAtPoint()
+    ; ClickAtPoint("AHK")
+    ; ClickAtPoint(7)
+    ; ClickAtPoint(16, "Pizza time!")
+    ClickAtPoint(16, 16)
     SayString ("Semicolon; in a string", true)  ; The interrupt doesn't quite work yet
 EndScript
-
-/* Multi-
-line
-comment */
-
-; The interpreter caught these:
-; Script abc123
-; Script ()
-; Script()
-; Script 3whatever()
-; Script test()
-;    Script test()
-;        ; comment
-;    EndScript
-; EndScript
