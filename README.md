@@ -2,8 +2,8 @@
 
 ## Overview
 
-I was hanging out with a friend this weekend when we got to talking about assistive tech scripting.  He's not a programmer,
-but he used to be able to do JAWS scripting all the time.  And I've seen it before in other places; there are guys (and gals)
+I was hanging out with a friend one weekend when we got to talking about assistive tech scripting.  He's not a programmer,
+but he used to do JAWS scripting all the time; then he switched to NVDA.  And I've seen it before in other places; there are people
 who are not developers but can do JAWS scripting - and often *only* JAWS scripting.  Now I'm not a fan of proprietary scripting
 languages, and no real programmer is IMO.  Most of us well-trained code monkeys want a "real" scripting language, like Python.
 But for the average Joe, developing NVDA add-ons is a daunting task - not only do you need to know Python, you need to know how
@@ -34,11 +34,12 @@ means you need a bunch of EXEs running if you have more than one script; one int
 
 ## Roadmap
 
-1. First, I want to build a working proof-of-concept. I want it to be able to do everything the DLL can, and have some of the basic features of a scripting language: variables, loops, arrays, and functions.  That's about al JAWS scripting has (no classes, interfaces, generics, lambdas, etc.).  I'd lke its syntax to work similar to JAWS scripting, because of goal #1 above, but it doesn't necessarily have to be identical.  One important difference I'm planning on is how shortcuts work.  In JAWS scripting, shortcuts can only be set from the IDE; I do plan to have a nice IDE someday, but I really think that info should be in the code somewhere (at this point I'm thinking as a parameter in script declarations).
-2. From there, I want to add some of the same functions that are in the JAWS scripting API.  It's been years since I wrote a JAWS
-script, so I forget what those are, but I have access to JAWS at work and can look them up.  This will be an ongoing process, as JAWS scripting is always changing.  For example, I looked up an example recently and found its variable are strongly typed - I totally don't remember that! :)
-3. But NVDA and AHK can do some things JAWS can't, so the next part would be to add some features not available in JAWS scripting.
-4. And of course, I'll want to give it a nice user-friendly IDE for folks who need/want that.  At this point that's just a crazy dream, but I'm sure I'll get there eventually (especially if it's not just me working on it).
+What I have currently is a proof-of-concept, which can parse script files and do a few things like sppeaking text or sending simulated keystrokes or mouse clicks.  This was my first mini-milestone, but I still have a long way to go.  In no particular order, I still have to accomplish the following:
+
+1. Continue to improve on the interpreter.  It needs to be able to do all the same basic things a scripting language can do.  This includes support for variables, loops, arrays, functions, nested function calls, etc.
+2. Continue adding built-in functions to the language.  These should be similar, if not identical, to their JAWS scripting equivalents.  Some functions (like setting rate) will not be possible unless the NVDA Controller Client DLL is updated to include them, but AHK can already do pretty much everything else.
+3. Document the language - usually I save this to the end, but since this is an entire language I'll probably have to do it as I go.
+4. Build an IDE.  JAWS scripting has one, so should NVScript
 
 ## Contributing
 
@@ -46,4 +47,4 @@ I know AutoHotKey is not a very well-known language (yet), but if you know it yo
 
 ## License
 
-Both NVDA and AutoHotKey use "GNU General Public License, version 2".  I'm not much of a legal beagle, more of a code monkey, so I'm not sure what that means in English other than "it's open source".  But since both use the same license, I think it's safe to assume that NVScript has the same license.
+Both NVDA and AutoHotKey use "GNU General Public License, version 2".  I'm not much of a legal beagle, really just a code monkey, so I'm not sure what that means in English other than "it's open source".  But since both use the same license, I think it's safe to assume that NVScript has the same license.
