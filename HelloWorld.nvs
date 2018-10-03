@@ -1,7 +1,7 @@
 /* Makes NVDA speak "Hello World!" */
 Script HelloWorld ()
     SayString ("Hello, World!")
-    SayString ("Semicolon; in a string", true)
+    SayString ("Semicolon; in a string", true)  ; The interrupt doesn't quite work yet
 EndScript
 
 /* Multi-

@@ -2,7 +2,15 @@
 
 SayString(params)
 {
-    ; For now, just loop through "params"
-    Loop % params.MaxIndex()
-        MsgBox % params[A_Index] . "  !!!"
+    ; Validate parameters
+    if (!params[1])
+    {
+        MsgBox Error: SayString needs at least one parameter, a non-blank string.
+        return
+    }
+
+    ; Use the NVDA controller DLL to speak
+    if (trim(params[2]) == "true")
+        NVDA.CancelSpeech()
+    NVDA.Say(params[1])
 }
