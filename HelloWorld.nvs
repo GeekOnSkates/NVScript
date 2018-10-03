@@ -1,7 +1,9 @@
 /* Makes NVDA speak "Hello World!" */
 Script HelloWorld ()
+    ; All these functions work, but are commented out as I continue to add new ones
     ; ClickAtPoint(16, 16)
     ; SayString ("Semicolon; in a string", true)  ; The interrupt doesn't quite work yet
     ; StopSpeech()
-    ControlEnterKey()
+    ; ControlEnterKey()
+    ; ControlShiftEnterKey()
 EndScript
