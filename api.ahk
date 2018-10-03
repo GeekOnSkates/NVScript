@@ -17,6 +17,12 @@ SayString(params)
     NVDA.Say(params[1])
 }
 
+; StopSpeech()
+StopSpeech()
+{
+    NVDA.CancelSpeech()
+}
+
 ; ClickAtPoint(int x, int y)
 ClickAtPoint(params)
 {

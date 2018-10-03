@@ -1,10 +1,6 @@
 /* Makes NVDA speak "Hello World!" */
 Script HelloWorld ()
-    ; It caught these errors:
-    ; ClickAtPoint()
-    ; ClickAtPoint("AHK")
-    ; ClickAtPoint(7)
-    ; ClickAtPoint(16, "Pizza time!")
-    ClickAtPoint(16, 16)
+    ; ClickAtPoint(16, 16)
     SayString ("Semicolon; in a string", true)  ; The interrupt doesn't quite work yet
+    StopSpeech()
 EndScript
