@@ -1,6 +1,7 @@
 /* Makes NVDA speak "Hello World!" */
 Script HelloWorld ()
     ; ClickAtPoint(16, 16)
-    SayString ("Semicolon; in a string", true)  ; The interrupt doesn't quite work yet
-    StopSpeech()
+    ; SayString ("Semicolon; in a string", true)  ; The interrupt doesn't quite work yet
+    ; StopSpeech()
+    ControlEnterKey()
 EndScript

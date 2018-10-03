@@ -222,7 +222,7 @@ class Parser
      */
     IsBuiltInFunction(name)
     {
-        names := ["ClickAtPoint", "SayString", "StopSpeech"]
+        names := ["ClickAtPoint", "ControlEnterKey", "SayString", "StopSpeech"]
         Loop % names.MaxIndex()
         {
             if (names[A_Index] == name)

@@ -43,3 +43,9 @@ ClickAtPoint(params)
     CoordMode, Mouse, Screen
     Click, %x%, %y%
 }
+
+; ControlEnterKey()
+ControlEnterKey()
+{
+    SendInput {control}{enter}
+}
