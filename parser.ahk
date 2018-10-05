@@ -1,5 +1,3 @@
-#include %A_ScriptDir%\misc.ahk
-
 /**
  * This takes the raw data from script files, checks for errors,
  * and sets up the stuff the interpreter will need to run the code.
@@ -172,7 +170,7 @@ class Parser
     {
         ; Split the string into  function name and parameters
         left := InStr(line, "(") - 1
-        right := InStr(line, ")") - 1
+        right := InStr(line, ")", false, 0) - 1
         funcName := Trim(SubStr(line, 1, left), " `t")
         if (!Parser.IsBuiltInFunction(funcName))
         {
@@ -181,7 +179,7 @@ class Parser
         }
         params := SubStr(line, left + 2, right - left - 1)
         
-        ; Collect all the strings and replace them with placeholders
+        ; Parse the function arguments into an array
         in_string := false
         str := ""
         args := array()
@@ -211,8 +209,17 @@ class Parser
         }
         args.push(str)
 
+        ; Handle nested function calls
+        Loop % args.MaxIndex()
+        {
+            if (Parser.isFunction(args[A_Index]))
+            {
+                args[A_Index] := this.CallFunction(args[A_Index])
+            }
+        }
+
         ; And run the function
-        %funcName%(args)
+        return %funcName%(args)
     }
 
     /**
@@ -222,7 +229,7 @@ class Parser
      */
     IsBuiltInFunction(name)
     {
-        names := ["ClickAtPoint", "ControlEnterKey", "ControlShiftEnterKey", "FileExists", "SayString", "StopSpeech"]
+        names := ["ClickAtPoint", "ControlEnterKey", "ControlShiftEnterKey", "FileExists", "SayString", "StopSpeech", "SubString"]
         Loop % names.MaxIndex()
         {
             if (names[A_Index] == name)

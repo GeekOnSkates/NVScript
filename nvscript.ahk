@@ -6,6 +6,7 @@
 #include %A_ScriptDir%\builtin\mouse_functions.ahk
 #include %A_ScriptDir%\builtin\file_functions.ahk
 #include %A_ScriptDir%\builtin\win32_functions.ahk
+#include %A_ScriptDir%\builtin\string_functions.ahk
 
 file := A_ScriptDir . "\HelloWorld.nvs"
 p := new Parser()

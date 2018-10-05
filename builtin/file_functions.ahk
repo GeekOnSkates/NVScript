@@ -11,7 +11,7 @@ FileExists(params)
     ; AHK's FileExist function doesn't return boolean,
     ; which is why I'm doing it like this.
     if (FileExist(params[1]))
-        return true
+        return "TRUE"
     else
-        return false
+        return "FALSE"
 }

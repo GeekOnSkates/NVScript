@@ -8,3 +8,9 @@ StringStartsWith(haystack, needle)
 {
     return SubStr(haystack, 1, StrLen(needle)) == needle
 }
+
+SubString(args)
+{
+    ; TO-DO: Validation & documentation
+    return SubStr(args[1], args[2] - 1, args[3] - 1)
+}

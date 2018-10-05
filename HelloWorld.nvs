@@ -6,4 +6,6 @@ Script HelloWorld ()
     ; StopSpeech()
     ; ControlEnterKey()
     ; ControlShiftEnterKey()
+    ; SayString(FileExists("HelloWorld.nvs"))
+    SayString(SubString("Who's that geek on the skates?", 11, 4))
 EndScript
